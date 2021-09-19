@@ -1,14 +1,18 @@
 This package is meant to illustrate:
 1) importing a module (`.py` file) in a subdirectory from another subdirectory by modifying the path
-2) running that same module as a *package* module as a script (using `-m` flag)
+2) vs. running that same module as a *package* module as a script (using `-m` flag)
 
 Notes
 * `packaging` is the top-level directory outside the `pack` package. `pack` is a valid Python package that includes two subpackages `dir1` and `dir2`.
 * The `__init__.py` files tell Python that `pack`, `dir1`, and `dir2` can have modules that are part of a package.
 * The `if` block in `pack/dir1/dir1_mod1.py` detects whether the module is being run as part of a package or not.
 
-`~/packaging $ tree`
-```
+### Directory structure
+```bash
+$ pwd
+/packaging
+
+$ tree
 .
 ├── ReadMe.md
 └── pack
@@ -23,6 +27,7 @@ Notes
 3 directories, 6 files.
 ```
 
+### Python file contents
 ```python
 # pack/dir1/dir1_mod1.py 
 import sys
@@ -68,9 +73,13 @@ d = {
     }
 ```
 
+## Executing from different contexts
+
 Run module and import by modifying path.
-`~/packaging $ python pack/dir1/dir1_mod1.py`
-```
+
+```bash
+$ python pack/dir1/dir1_mod1.py
+
 dir1_mod1.d:
 {'__file__': 'pack/dir1/dir1_mod1.py',
  '__name__': '__main__',
@@ -86,8 +95,10 @@ dir2_mod1.d:
 ```
 
 Run module as script via `-m` flag. Module can import from other subpackages.
-`~/packaging $ python -m pack.dir1.dir1_mod1`
-```
+
+```bash
+$ python -m pack.dir1.dir1_mod1
+
 dir1_mod1.d:
 {'__file__': '/Users/pzuradzki/code/packaging/pack/dir1/dir1_mod1.py',
  '__name__': '__main__',
